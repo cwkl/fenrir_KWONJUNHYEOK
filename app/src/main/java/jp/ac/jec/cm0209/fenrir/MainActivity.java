@@ -73,9 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int parking = 0;
     private int wifi = 0;
     private int hitPerPage = 10;
-    private Item item;
     private List<android.location.Address> addresses;
-    AppCompatDialog progressDialog;
+    private AppCompatDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

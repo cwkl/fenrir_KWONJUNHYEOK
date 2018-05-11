@@ -21,24 +21,24 @@ import java.io.InputStream;
 
 
 public class detailInfoActivity extends AppCompatActivity implements OnMapReadyCallback{
-    String imgUrl;
-    String name;
-    String category;
-    String address;
-    String opentime;
-    String holiday;
-    String tel;
-    String line;
-    String station;
-    String station_exit;
-    String access;
-    String hp;
-    String coupon;
-    String latitude;
-    String longitude;
-    String pr_short;
-    String pr_long;
-    String pr;
+    private String imgUrl;
+    private String name;
+    private String category;
+    private String address;
+    private String opentime;
+    private String holiday;
+    private String tel;
+    private String line;
+    private String station;
+    private String station_exit;
+    private String access;
+    private String hp;
+    private String coupon;
+    private String latitude;
+    private String longitude;
+    private String pr_short;
+    private String pr_long;
+    private String pr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,40 +80,42 @@ public class detailInfoActivity extends AppCompatActivity implements OnMapReadyC
         pr_short = intent.getStringExtra("pr_short");
         pr_long = intent.getStringExtra("pr_long");
 
-        if (category.equals("{}")){
+//        if (category.equals("{}")){
+
+        if ("{}".equals(category)){
             category = "";
         }
-        if (address.equals("{}")){
+        if ("{}".equals(address)){
             address = "";
         }
-        if (opentime.equals("{}")){
+        if ("{}".equals(opentime)){
             opentime = "情報なし";
         }
-        if (holiday.equals("{}")){
+        if ("{}".equals(holiday)){
             holiday = "情報なし";
         }
-        if (tel.equals("{}")){
+        if ("{}".equals(tel)){
             tel = "";
         }
-        if (line.equals("{}")){
+        if ("{}".equals(line)){
             line = "";
         }
-        if (station.equals("{}")){
+        if ("{}".equals(station)){
             station = "";
         }
-        if (station_exit.equals("{}")){
+        if ("{}".equals(station_exit)){
             station_exit = "";
         }
-        if (hp.equals("{}")){
+        if ("{}".equals(hp)){
             hp = "";
         }
-        if (coupon.equals("{}")){
+        if ("{}".equals(coupon)){
             coupon = "なし";
         }
-        if (pr_short.equals("{}")){
+        if ("{}".equals(pr_short)){
             pr_short = "";
         }
-        if (pr_long.equals("{}")){
+        if ("{}".equals(pr_long)){
             pr_long = "";
         }
 
@@ -137,7 +139,7 @@ public class detailInfoActivity extends AppCompatActivity implements OnMapReadyC
         }
 
         if (shopImg != null){
-            if (imgUrl.equals("{}")){
+            if ("{}".equals(imgUrl)){
                 shopImg.setImageResource(R.drawable.noimageicon);
             }else {
                 new detailInfoActivity.DownloadImageTask(shopImg).execute(imgUrl);
