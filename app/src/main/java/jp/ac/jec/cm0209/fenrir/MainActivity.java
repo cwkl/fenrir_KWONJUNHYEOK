@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton btnSearch;
     private ItemAdapter adapter;
     private Geocoder geocoder;
+    final String keyid = "9c75b92f795ca6428fc8c3bb23b7a304";
     private double latitude = 0;
     private double longitude = 0;
     private String line;
@@ -131,10 +132,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        //Set ListView empty
+        listView.setEmptyView(findViewById(R.id.empty));
+
         requestPermission();
         getLocation();
         progressON(MainActivity.this);
-
     }
 
     //Set Adapter to Listview
@@ -160,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 TextView txtAccess = convertView.findViewById(R.id.txtAccess);
 
                 if (img != null){
-                    if (item.getImgUrl().equals("{}")){
+                    if ("{}".equals(item.getImgUrl())){
                         img.setImageResource(R.drawable.noimageicon);
                     }else {
                         new DownloadImageTask(img).execute(item.getImgUrl());
@@ -180,13 +183,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     station = item.getStation();
                     station_exit = item.getStation_exit();
 
-                    if (item.getLine().equals("{}")){
+                    if ("{}".equals(item.getLine())){
                         line = "";
                     }
-                    if (item.getStation().equals("{}")){
+                    if ("{}".equals(item.getStation())){
                         station = "";
                     }
-                    if (item.getStation_exit().equals("{}")){
+                    if ("{}".equals(item.getStation_exit())){
                         station_exit = "";
                     }
                     txtAccess.setText(line + "\n" + station + " " + station_exit);
@@ -222,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         return;
                     }
 
-                    String jsonUrl = "https://api.gnavi.co.jp/RestSearchAPI/20150630/?keyid=9c75b92f795ca6428fc8c3bb23b7a304&format=json&" +
+                    String jsonUrl = "https://api.gnavi.co.jp/RestSearchAPI/20150630/?keyid=" + keyid + "&format=json&" +
                             "latitude=" + latitude +
                             "&longitude=" + longitude +
                             "&range=" + range +
@@ -387,37 +390,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (v.getId() == R.id.btnNoSmoking){
-            if (noSmoking == 0){
-                noSmoking = 1;
-                btnNoSmoking.setImageResource(R.drawable.nosmokingicon_clicked);
-            }else if (noSmoking == 1){
-                noSmoking = 0;
-                btnNoSmoking.setImageResource(R.drawable.nosmokingicon);
-            }
+            int[] noSmokingImage = {R.drawable.nosmokingicon, R.drawable.nosmokingicon_clicked };
+            noSmoking = (noSmoking == 0) ? 1 : 0;
+            btnNoSmoking.setImageResource(noSmokingImage[noSmoking]);
         }else if (v.getId() == R.id.btnParking){
-            if (parking == 0){
-                parking = 1;
-                btnParking.setImageResource(R.drawable.parkingicon_clicked);
-            }else if (parking == 1){
-                parking = 0;
-                btnParking.setImageResource(R.drawable.parkingicon);
-            }
+            int[] parkingImage = {R.drawable.parkingicon, R.drawable.parkingicon_clicked };
+            parking = (parking == 0) ? 1 : 0;
+            btnParking.setImageResource(parkingImage[parking]);
         }else if (v.getId() == R.id.btnTakeOut){
-            if (takeout == 0){
-                takeout = 1;
-                btnTakeOut.setImageResource(R.drawable.takeouticon_clicked);
-            }else if (takeout == 1){
-                takeout = 0;
-                btnTakeOut.setImageResource(R.drawable.takeouticon);
-            }
+            int[] takeoutImage = {R.drawable.takeouticon, R.drawable.takeouticon_clicked };
+            takeout = (takeout == 0) ? 1 : 0;
+            btnTakeOut.setImageResource(takeoutImage[takeout]);
         }else if (v.getId() == R.id.btnWifi){
-            if (wifi == 0){
-                wifi = 1;
-                btnWifi.setImageResource(R.drawable.wifiicon_clicked);
-            }else if (wifi == 1){
-                wifi = 0;
-                btnWifi.setImageResource(R.drawable.wifiicon);
-            }
+            int[] wifiImage = {R.drawable.wifiicon, R.drawable.wifiicon_clicked };
+            wifi = (wifi == 0) ? 1 : 0;
+            btnWifi.setImageResource(wifiImage[wifi]);
         }else if (v.getId() == R.id.btnRange){
             if (range == 1){
                 range = 2;
