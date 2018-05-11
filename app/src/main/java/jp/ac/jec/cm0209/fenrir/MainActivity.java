@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton btnWifi;
     private ImageButton btnRange;
     private ListView listView;
-    private Button btnSearch;
+    private ImageButton btnSearch;
     private ItemAdapter adapter;
     private Geocoder geocoder;
     private double latitude = 0;
@@ -221,7 +221,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     String jsonUrl = "https://api.gnavi.co.jp/RestSearchAPI/20150630/?keyid=9c75b92f795ca6428fc8c3bb23b7a304&format=json&" +
-                            "latitude=" + latitude + "&longitude=" + longitude +
+                            "latitude=" + latitude +
+                            "&longitude=" + longitude +
                             "&range=" + range +
                             "&no_smoking=" + noSmoking +
                             "&takeout=" + takeout +
@@ -301,7 +302,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     adapter.add(new Item(item.getName(), item.getAddress(), item.getCategory(), item.getTel(), item.getOpenTime(),
                             item.getLine(), item.getStation(), item.getStation_exit(), item.getLatitude(), item.getLongitude(),
                             item.getImgUrl(), item.getHoliday(), item.getHp(), item.getCoupon(), item.getPr_short(), item.getPr_long()));
-                    Log.d("TAG", "onPostExecute: " + item.getLatitude() + item.getLongitude());
                 }
 
                 String address = addresses.get(0).getAddressLine(0);

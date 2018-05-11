@@ -23,16 +23,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2.5"/>
-        <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height=""></LinearLayout>-->
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/livelocationicon"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
