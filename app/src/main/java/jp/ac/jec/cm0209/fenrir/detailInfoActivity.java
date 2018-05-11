@@ -7,12 +7,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -60,6 +57,7 @@ public class detailInfoActivity extends AppCompatActivity implements OnMapReadyC
         TextView txtCoupon = findViewById(R.id.txtCoupon);
         TextView txtPr = findViewById(R.id.txtPr);
 
+        //Set MapView
         FragmentManager fragmentManager = getFragmentManager();
         MapFragment mapFragment = (MapFragment)fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -177,6 +175,7 @@ public class detailInfoActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
+    //Set Map
     @Override
     public void onMapReady(GoogleMap map) {
         double dLatitude = Double.parseDouble(latitude);
@@ -193,6 +192,8 @@ public class detailInfoActivity extends AppCompatActivity implements OnMapReadyC
         map.moveCamera(CameraUpdateFactory.newLatLng(shopMap));
         map.animateCamera(CameraUpdateFactory.zoomTo(17));
     }
+
+    //Download Shopimage from Url
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView shopImage;
 
@@ -214,7 +215,6 @@ public class detailInfoActivity extends AppCompatActivity implements OnMapReadyC
 
         protected void onPostExecute(Bitmap result) {
             shopImage.setImageBitmap(result);
-
         }
     }
 }

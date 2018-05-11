@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new ItemAdapter(this);
         listView.setAdapter(adapter);
 
+        //Send Item to DetailActivity
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -126,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("pr_short",sendItem.getPr_short());
                 intent.putExtra("pr_long",sendItem.getPr_long());
 
-
                 startActivity(intent);
             }
         });
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    //Set Adapter to Listview
     class ItemAdapter extends ArrayAdapter<Item>{
         ItemAdapter(Context context){
             super(context, R.layout.listview_item);
@@ -196,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //Get Latitude, Longitude
     public void getLocation(){
         client = LocationServices.getFusedLocationProviderClient(this);
 
@@ -235,16 +237,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    //Get Location Permission
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
     }
 
+    //get Json
     class JsonTask extends AsyncTask<String, String, String> {
         protected void onPreExecute() {
             super.onPreExecute();
 
         }
-
         protected String doInBackground(String... params) {
             HttpURLConnection connection = null;
             BufferedReader reader = null;
@@ -284,7 +287,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -295,14 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ArrayList list =  helper.parseJson(result);
 
                 adapter.clear();
-
-                for (int i = 0; i < list.size(); i++){
-                    item = (Item) list.get(i);
-
-                    adapter.add(new Item(item.getName(), item.getAddress(), item.getCategory(), item.getTel(), item.getOpenTime(),
-                            item.getLine(), item.getStation(), item.getStation_exit(), item.getLatitude(), item.getLongitude(),
-                            item.getImgUrl(), item.getHoliday(), item.getHp(), item.getCoupon(), item.getPr_short(), item.getPr_long()));
-                }
+                adapter.addAll(list);
 
                 String address = addresses.get(0).getAddressLine(0);
                 String[] addressFix = address.split(" ");
@@ -325,6 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //Download Shopimage from Url
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView shopImage;
 
@@ -346,11 +342,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         protected void onPostExecute(Bitmap result) {
             shopImage.setImageBitmap(result);
-
         }
     }
-    public void progressON(Activity activity) {
 
+    //Show progress
+    public void progressON(Activity activity) {
         if (activity == null || activity.isFinishing()) {
             return;
         }
@@ -370,6 +366,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
+    //Unshow Progress
     public void progressOFF() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
@@ -379,13 +377,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @RequiresApi(api = 26)
     @Override
     public void onClick(View v) {
+
+        //Set Vibrator
         Vibrator vibrator = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             vibrator.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
         }else {
             vibrator.vibrate(30);
         }
-
 
         if (v.getId() == R.id.btnNoSmoking){
             if (noSmoking == 0){
@@ -434,7 +433,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btnRange.setImageResource(R.drawable.rangeicon300);
             }
         }else if (v.getId() == R.id.btnSearch){
-
             requestPermission();
             getLocation();
             progressON(MainActivity.this);

@@ -4,6 +4,7 @@ package jp.ac.jec.cm0209.fenrir;
  * Created by guest on 2018/05/07.
  */
 
+//Item class
 public class Item {
     private String name;
     private String address;

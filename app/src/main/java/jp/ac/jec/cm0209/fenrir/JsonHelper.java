@@ -2,7 +2,6 @@ package jp.ac.jec.cm0209.fenrir;
 
 import android.content.Context;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
  * Created by guest on 2018/05/07.
  */
 
+//Parse Json
 public class JsonHelper {
 
     MainActivity activity ;
@@ -27,8 +27,7 @@ public class JsonHelper {
         ArrayList<Item> list = new ArrayList<>();
         try{
             JSONObject json = new JSONObject(strJson);
-            JSONArray rest = new JSONArray();
-            rest = json.getJSONArray("rest");
+            JSONArray rest = json.getJSONArray("rest");
 
             for (int i = 0; i < rest.length(); i++){
                 JSONObject temp = rest.getJSONObject(i);
@@ -66,8 +65,6 @@ public class JsonHelper {
                 String pr_short = pr.getString("pr_short");
                 String pr_long = pr.getString("pr_long");
 
-
-
                 Item item = new Item(name, address, category, tel, opentime, line, station, station_exit,
                         latitude, longitude, imgUrl, holiday, hp, coupon, pr_short, pr_long);
                 list.add(item);
@@ -77,8 +74,6 @@ public class JsonHelper {
                 activity.progressOFF();
             }
             Log.e("JsonHelper", e.getMessage(), e);
-
-
         }
         return list;
     }
