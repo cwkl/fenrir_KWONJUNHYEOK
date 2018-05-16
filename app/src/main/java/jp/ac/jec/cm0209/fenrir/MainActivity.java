@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new ItemAdapter(this);
         listView.setAdapter(adapter);
 
-        //Send Item to DetailActivity
+        //Send Item to DetailInfoActivity
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Set ListView empty
         listView.setEmptyView(findViewById(R.id.empty));
 
+        progressON(MainActivity.this);
         requestPermission();
         getLocation();
-        progressON(MainActivity.this);
     }
 
     //Set Adapter to Listview
@@ -192,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         station_exit = "";
                     }
                     txtAccess.setText(line + "\n" + station + " " + station_exit);
-
                 }
             }
             return convertView;
@@ -204,12 +203,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         client = LocationServices.getFusedLocationProviderClient(this);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            txtLiveAddress.setText("現在位置を取得できません");
+            progressOFF();
             return;
         }
 
         client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+                Log.d("TAG", "onSuccess: "+ location);
                 if (location != null) {
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
@@ -234,6 +236,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             "&wifi=" + wifi +
                             "&hit_per_page=" + hitPerPage;
                     new JsonTask().execute(jsonUrl);
+                }else {
+                    txtLiveAddress.setText("現在位置を取得できません");
+                    progressOFF();
                 }
             }
         });
@@ -248,7 +253,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     class JsonTask extends AsyncTask<String, String, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
         protected String doInBackground(String... params) {
             HttpURLConnection connection = null;
